@@ -1,0 +1,16 @@
+{
+  "name": "funprog",
+  "version": "1.0.0",
+  "description": "A simple library for functional programming",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/nodemon --exec 'npm run test'",
+    "test": "./node_modules/.bin/mocha"
+  },
+  "author": "phil@xceptionale.com",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.7"
+  }
+}
