@@ -28,6 +28,22 @@ async function * makeAsyncRangeIterator (start = 0, end = Infinity, step = 1) {
     return iterationCount
   }
 
+function makeAsyncHasNextRangeIterator (start = 0, end = Infinity, step = 1) {
+    let iterationCount = start
+    return {
+        hasNext: function () {
+            return iterationCount < end
+        },
+        next: function () {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(iterationCount++)
+                }, 10)
+            })
+        }
+    }
+}
+
 module.exports = {
   nums,
   add1,
@@ -37,5 +53,6 @@ module.exports = {
   isGreaterThan,
   concat,
   identity,
-  makeAsyncRangeIterator
+  makeAsyncRangeIterator,
+  makeAsyncHasNextRangeIterator
 }

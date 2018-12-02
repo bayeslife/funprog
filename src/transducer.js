@@ -1,14 +1,27 @@
 
-async function transduceIterator (xf, rf, init, xs) {
-    var reducer = xf(rf)
+async function transduceAsyncIterator (transform, reducerfunction, init, asynciterator) {
+    var reducer = transform(reducerfunction)
     var n = null
     do {
-        n = await xs.next()
+        n = await asynciterator.next()
         if (!n.done) {
         var v = n.value
         init = reducer(init, v)
         }
     } while (!n.done)
+    return init
+}
+
+async function transduceAsyncHasNextIterator (transform, reducerfunction, init, asynchasnextiterator) {
+    var reducer = transform(reducerfunction)
+    var n = null
+    do {
+        n = await asynchasnextiterator.hasNext()
+        if (n) {
+            var v = await asynchasnextiterator.next()
+            init = reducer(init, v)
+        }
+    } while (n)
     return init
 }
 
@@ -20,6 +33,7 @@ function transduceArray (xf, rf, init, xs) {
 }
 
 module.exports = {
-    transduceIterator,
+    transduceAsyncIterator,
+    transduceAsyncHasNextIterator,
     transduceArray
 }
