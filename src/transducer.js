@@ -1,24 +1,24 @@
 
-async function transduceIterator(xf, rf, init, xs) {
+async function transduceIterator (xf, rf, init, xs) {
     var reducer = xf(rf)
     var n = null
     do {
         n = await xs.next()
-        if(!n.done){
+        if (!n.done) {
         var v = n.value
-        init = reducer(init,v)
+        init = reducer(init, v)
         }
-    }while(!n.done)
+    } while (!n.done)
     return init
 }
 
-function transduceArray(xf, rf, init, xs) {
+function transduceArray (xf, rf, init, xs) {
     // call reduce on the data structure internally (abstract it away)
     // pass the rf to the composed transformation
     // pass in the initial value
-    return xs.reduce(xf(rf), init);
+    return xs.reduce(xf(rf), init)
 }
-  
+
 module.exports = {
     transduceIterator,
     transduceArray
