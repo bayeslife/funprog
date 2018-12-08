@@ -1,3 +1,4 @@
+var assert = require('assert')
 
 // generalize the 'mapping' concept, without the concat...
 function mapping (f) {
@@ -19,7 +20,23 @@ function mapping (f) {
     }
   }
 
+function take (cnt) {
+  assert(cnt && cnt > 0)
+  var count = cnt
+  return function (rf) {
+    // this takes 2 things and makes them 1
+    return (acc, val) => {
+      if ((--count) < 0) {
+        return null
+      } else {
+        return rf(acc, val)
+      }
+    }
+  }
+}
+
 module.exports = {
     mapping,
-    filtering
+    filtering,
+    take
 }

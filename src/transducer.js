@@ -15,13 +15,17 @@ async function transduceAsyncIterator (transform, reducerfunction, init, asyncit
 async function transduceAsyncHasNextIterator (transform, reducerfunction, init, asynchasnextiterator) {
     var reducer = transform(reducerfunction)
     var n = null
+    var r = null
     do {
         n = await asynchasnextiterator.hasNext()
         if (n) {
             var v = await asynchasnextiterator.next()
-            init = reducer(init, v)
+            r = reducer(init, v)
+            if (r) {
+                init = r
+            }
         }
-    } while (n)
+    } while (r && n)
     return init
 }
 

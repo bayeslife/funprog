@@ -1,4 +1,4 @@
-const { compose, transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, mapping, filtering } = require('../index.js')
+const { compose, transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, take, mapping, filtering } = require('../index.js')
 const { nums, add1, identity, isEven, isGreaterThan, concat, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('./utility.js')
 
 var assert = require('assert')
@@ -31,5 +31,14 @@ describe('Given the functional programming library', function () {
         const numsIt = makeAsyncHasNextRangeIterator(1, 10)
         var result = await transduceAsyncHasNextIterator(deltaxform, concat, [], numsIt)
         assert.equal(result.toString(), [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ].toString())
+    })
+    it('Then able to asynchronously take from hasNext interator', async function () {
+        const deltaxform = compose(
+            take(3),
+            mapping(identity)
+          )
+        const numsIt = makeAsyncHasNextRangeIterator(1, 10)
+        var result = await transduceAsyncHasNextIterator(deltaxform, concat, [], numsIt)
+        assert.equal(result.toString(), [1, 2, 3].toString())
     })
 })
