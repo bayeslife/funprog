@@ -9,12 +9,12 @@ I found a number of functional programming libraries (tranducer.js, ramda) but f
 ## How to use
 
 ```
-npm install fp-lib
+npm install funprog
 ```
 
 Then use the functionality that you require (which is visible in index.js)
 ```
-const { compose, transduceArray, transduceIterator,mapping, filtering } = require('fp-lib')
+const { compose, transduceArray, transduceIterator,mapping, filtering } = require('funprog')
 ````
 
 ## Tests

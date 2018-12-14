@@ -1,5 +1,5 @@
-const { compose, transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, take, mapping, filtering } = require('../index.js')
-const { nums, add1, identity, isEven, isGreaterThan, concat, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('./utility.js')
+const { compose, transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, take, mapping, filtering, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('../index.js')
+const { nums, add1, identity, isEven, isGreaterThan, concat } = require('./utility.js')
 
 var assert = require('assert')
 
