@@ -12,16 +12,16 @@ const xform = compose(
 )
 
 describe('Given the functional programming library', function () {
-    it('Then able to synchronously transduce from an array', function () {
+    it('Then able to synchronously transduce from an array', async function () {
         const tform = compose(
             mapping(not),
             take(1))
-        const result = transduceArray(tform, concat, [], nums)
+        const result = await transduceArray(tform, concat, [], nums)
         assert.equal(result.toString(), [false].toString())
     })
 
-    it('Then able to synchronously transduce from an array', function () {
-        const result = transduceArray(xform, concat, [], nums)
+    it('Then able to synchronously transduce from an array', async function () {
+        const result = await transduceArray(xform, concat, [], nums)
         assert.equal(result.toString(), [8, 10].toString())
     })
     it('Then able to asynchronously transduce from an interator', async function () {
