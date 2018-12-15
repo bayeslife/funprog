@@ -1,5 +1,5 @@
-const { compose, transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, take, mapping, filtering, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('../index.js')
-const { nums, add1, identity, isEven, isGreaterThan, concat } = require('./utility.js')
+const { identity, isEven, isGreaterThan, not, compose, transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, take, mapping, filtering, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('../index.js')
+const { nums, add1, concat } = require('./utility.js')
 
 var assert = require('assert')
 
@@ -12,6 +12,14 @@ const xform = compose(
 )
 
 describe('Given the functional programming library', function () {
+    it('Then able to synchronously transduce from an array', function () {
+        const tform = compose(
+            mapping(not),
+            take(1))
+        const result = transduceArray(tform, concat, [], nums)
+        assert.equal(result.toString(), [false].toString())
+    })
+
     it('Then able to synchronously transduce from an array', function () {
         const result = transduceArray(xform, concat, [], nums)
         assert.equal(result.toString(), [8, 10].toString())

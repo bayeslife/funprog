@@ -27,7 +27,7 @@ function take (cnt) {
     // this takes 2 things and makes them 1
     return (acc, val) => {
       if ((--count) < 0) {
-        return null
+        return acc
       } else {
         return rf(acc, val)
       }
