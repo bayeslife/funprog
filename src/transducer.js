@@ -33,7 +33,8 @@ async function transduceArray (xf, rf, init, xs) {
     // call reduce on the data structure internally (abstract it away)
     // pass the rf to the composed transformation
     // pass in the initial value
-    return xs.reduce(xf(rf), init)
+    var xrf = await xf(rf)
+    return xs.reduce(xrf, init)
 }
 
 module.exports = {

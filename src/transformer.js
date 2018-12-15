@@ -4,8 +4,9 @@ var assert = require('assert')
 function mapping (f) {
     return function (rf) {
       // this takes 2 things and makes them 1
-      return (acc, val) => {
-        return rf(acc, f(val)) // <-- rf replaces 'concat'
+      return async (acc, val) => {
+        var m = await f(val)
+        return rf(acc, m) // <-- rf replaces 'concat'
       }
     }
   }
@@ -14,8 +15,10 @@ function mapping (f) {
   function filtering (p) {
     return function (rf) {
       // this takes 2 things and makes them 1
-      return (acc, val) => {
-        return p(val) ? rf(acc, val) : acc // <-- rf replaces 'concat'
+      return async (acc, val) => {
+        return (await p(val))
+          ? rf(acc, val)
+          : acc // <-- rf replaces 'concat'
       }
     }
   }
@@ -25,7 +28,7 @@ function take (cnt) {
   var count = cnt
   return function (rf) {
     // this takes 2 things and makes them 1
-    return (acc, val) => {
+    return async (acc, val) => {
       if ((--count) < 0) {
         return acc
       } else {

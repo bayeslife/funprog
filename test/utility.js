@@ -5,8 +5,9 @@ const add1 = x => x + 1
 const doubleIt = x => x * 2
 const add = (x, y) => x + y
 
-function concat (xs, val) {
-    return xs.concat(val)
+async function concat (xs, val) {
+    var x = await xs
+    return x.concat(val)
 }
 
 module.exports = {

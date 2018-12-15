@@ -19,7 +19,6 @@ describe('Given the functional programming library', function () {
         const result = await transduceArray(tform, concat, [], nums)
         assert.equal(result.toString(), [false].toString())
     })
-
     it('Then able to synchronously transduce from an array', async function () {
         const result = await transduceArray(xform, concat, [], nums)
         assert.equal(result.toString(), [8, 10].toString())
