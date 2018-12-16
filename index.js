@@ -2,7 +2,7 @@ var { transduceAsyncIterator, transduceAsyncHasNextIterator, transduceArray } = 
 
 var { compose, concat } = require('./src/functionalprogramming.js')
 
-var { mapping, filtering, take } = require('./src/transformer.js')
+var { mapping, filtering, take, skip } = require('./src/transformer.js')
 
 var { not, identity, isEven, isGreaterThan } = require('./src/operators.js')
 
@@ -22,6 +22,7 @@ module.exports = {
     mapping,
     filtering,
     take,
+    skip,
 
     concat,
 

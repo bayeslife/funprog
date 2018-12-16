@@ -1,5 +1,5 @@
-const { identity, isEven, isGreaterThan, not, compose, transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, take, mapping, filtering, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('../index.js')
-const { nums, add1, concat } = require('./utility.js')
+const { identity, isEven, isGreaterThan, not, compose, transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, take, skip, mapping, filtering, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('../index.js')
+const { nums, add1, sub1, concat } = require('./utility.js')
 
 var assert = require('assert')
 
@@ -10,14 +10,21 @@ const xform = compose(
   // mapping(doubleIt),
   // mapping(add1),
 )
+describe('Given the functional programming library', function () {
+    it('Then compose not and operation', async function () {
+        var f = compose(not, sub1)
+        assert.equal(true, await f(1))
+        assert.equal(false, await f(0))
+    })
+})
 
 describe('Given the functional programming library', function () {
     it('Then able to synchronously transduce from an array', async function () {
         const tform = compose(
-            mapping(not),
+            mapping(compose(not, sub1)),
             take(1))
         const result = await transduceArray(tform, concat, [], nums)
-        assert.equal(result.toString(), [false].toString())
+        assert.equal(result.toString(), [true].toString())
     })
     it('Then able to synchronously transduce from an array', async function () {
         const result = await transduceArray(xform, concat, [], nums)
@@ -47,5 +54,14 @@ describe('Given the functional programming library', function () {
         const numsIt = makeAsyncHasNextRangeIterator(1, 10)
         var result = await transduceAsyncHasNextIterator(deltaxform, concat, [], numsIt)
         assert.equal(result.toString(), [1, 2, 3].toString())
+    })
+    it('Then able to asynchronously skip from hasNext interator', async function () {
+        const deltaxform = compose(
+            skip(6),
+            mapping(identity)
+          )
+        const numsIt = makeAsyncHasNextRangeIterator(1, 10)
+        var result = await transduceAsyncHasNextIterator(deltaxform, concat, [], numsIt)
+        assert.equal(result.toString(), [7, 8, 9].toString())
     })
 })

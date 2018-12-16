@@ -1,5 +1,10 @@
+var debug = require('debug')('funprog')
 
- const not = x => !x
+ const not = async (x) => {
+     var operand = await x
+    debug(`Not: ${operand}`)
+    return !operand
+ }
 
 const identity = x => x
 
