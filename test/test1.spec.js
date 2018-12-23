@@ -70,7 +70,7 @@ it('Then able to asynchronously skip from hasNext interator', async function () 
 it('Then able to asynchronously detect events from a stream', async function () {
     const deltaxform = compose(
         mapping(modulus(3)),
-        eventing(digitize) // 3 events [1-2,4-5,7-8]
+        eventing(digitize(null)) // 3 events [1-2,4-5,7-8]
     )
     const numsIt = makeAsyncHasNextRangeIterator(1, 10)
     var result = await transduceAsyncHasNextIterator(deltaxform, concat, [], numsIt)

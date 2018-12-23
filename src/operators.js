@@ -12,7 +12,14 @@ const identity = x => x
 const isEven = x => x % 2 === 0
 const isOdd = x => !isEven(x)
 const isGreaterThan = x => y => y > x ? y : 0
-const digitize = x => x ? 1 : 0
+const digitize = property => x => {
+    if (!property) {
+        return x ? 1 : 0
+    } else {
+        return x[property] ? 1 : 0
+    }
+}
+
 const modulus = val => x => x % val
 
 module.exports = {
