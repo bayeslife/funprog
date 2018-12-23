@@ -17,6 +17,52 @@ Then use the functionality that you require (which is visible in index.js)
 const { compose, transduceArray, transduceIterator,mapping, filtering } = require('funprog')
 ````
 
+## Functions
+### Operators
+
+There are a number of operators which generally take a value and return another value
+
+ - not,
+ - identity,
+ - isEven,
+ - isGreaterThan,
+ - digitize,
+ - modulus
+
+### Stream Transforms
+
+The transforms operate the stream of values
+
+- mapping,
+- filtering,
+- take,
+- skip,
+- eventing
+
+### Generators
+
+There are a number of functions to produce generators
+
+- makeArrayIterator,
+- makeAsyncRangeIterator,
+- makeAsyncHasNextRangeIterator
+
+### Transducers
+
+There are a set of transducer functions.
+A transducer is a function taking 4 parameters
+  - a transform,
+  - a reducer,
+  - an initial response ,
+  - a generator
+  
+The transducer reads from the generator transforms the value and reduces using the reduce function and initial accumulation
+
+ - transduceAsyncIterator,
+ - transduceAsyncHasNextIterator,
+ - transduceArray
+
+
 ## Tests
 
 Use `npm start` to run the unit tests

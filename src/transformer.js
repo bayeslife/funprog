@@ -20,8 +20,7 @@ function mapping (f) {
       return async (acc, val) => {
         var pred = (await p(val))
         debug(`Filter ${pred}`)
-        return pred ? rf(acc, val)
-          : acc // <-- rf replaces 'concat'
+        return pred ? rf(acc, val) : acc // <-- rf replaces 'concat'
       }
     }
   }
@@ -56,9 +55,38 @@ function skip (cnt) {
   }
 }
 
+function eventing (p) {
+  var latest = null
+  var sequence = 0
+  return function (rf) {
+    return async (acc, val) => {
+      sequence++
+      var pred = (await p(val))
+      debug(`Check continuation ${pred}`)
+      if (pred && !latest) {
+        latest = {
+          start: val.time ? val.time : sequence,
+          end: val.time ? val.time : sequence
+        }
+        return acc
+      } else if (pred && latest) {
+        latest.end = val.time ? val.time : sequence
+        return acc
+      } else if (!pred && latest) {
+        var next = latest
+        latest = null
+        return rf(acc, next)
+      } else {
+        return acc
+      }
+    }
+  }
+}
+
 module.exports = {
   mapping,
   filtering,
   take,
-  skip
+  skip,
+  eventing
 }
