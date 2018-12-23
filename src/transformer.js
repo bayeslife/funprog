@@ -57,7 +57,7 @@ function skip (cnt) {
 
 function eventing (p) {
   var latest = null
-  var sequence = 0
+  var sequence = -1
   return function (rf) {
     return async (acc, val) => {
       sequence++
@@ -75,6 +75,7 @@ function eventing (p) {
       } else if (!pred && latest) {
         var next = latest
         latest = null
+        debug(`reduce with ${next.start}-${next.end}`)
         return rf(acc, next)
       } else {
         return acc

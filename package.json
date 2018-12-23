@@ -1,6 +1,6 @@
 {
   "name": "funprog",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "A simple library for functional programming",
   "main": "index.js",
   "scripts": {
