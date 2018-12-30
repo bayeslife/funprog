@@ -1,9 +1,14 @@
 {
   "name": "funprog",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "A simple library for functional programming",
-  "main": "index.js",
+  "main": "dist/lib.umd.js",
+  "unpkg": "dist/lib.umd.js",
+  "file": [
+    "dist"
+  ],
   "scripts": {
+    "build": "rollup -c",
     "lint": "eslint --fix src test",
     "start": "./node_modules/.bin/nodemon --exec 'npm run lint && npm run test'",
     "test": "./node_modules/.bin/mocha"
@@ -23,6 +28,9 @@
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
     "mocha": "^5.2.0",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "rollup": "^1.0.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0"
   }
 }
