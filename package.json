@@ -17,7 +17,8 @@
     "build": "rollup -c",
     "lint": "eslint --fix src test",
     "start": "./node_modules/.bin/nodemon --exec 'npm run lint && npm run test'",
-    "test": "./node_modules/.bin/mocha --require dist/funprog.min.js"
+    "test": "npm run build && npm run mocha",
+    "mocha": "./node_modules/.bin/mocha --require dist/funprog.umd.js"
   },
   "repository": {
     "type": "git",
