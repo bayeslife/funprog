@@ -1,13 +1,13 @@
 {
   "name": "funprog",
-  "version": "1.6.8",
+  "version": "1.6.9",
   "description": "A simple library for functional programming",
   "source": "index.js",
   "main": "dist/funprog.js",
   "module": "dist/funprog.mjs",
-  "main:umd": "dist/funprog.min.js",
-  "browser": "dist/funprog.min.js",
-  "unpkg": "dist/funprog.min.js",
+  "main:umd": "dist/funprog.umd.js",
+  "browser": "dist/funprog.js",
+  "unpkg": "dist/funprog.js",
   "file": [
     "dist",
     "src",
