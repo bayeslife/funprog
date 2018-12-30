@@ -1,5 +1,3 @@
-var assertMod = require('assert')
-
 // generalize the 'mapping' concept, without the concat...
 function mapping (f) {
     return function (rf) {
@@ -23,7 +21,7 @@ function mapping (f) {
   }
 
 function take (cnt) {
-  assertMod(cnt && cnt > 0)
+  //assert(cnt && cnt > 0)
   var count = cnt
   return function (rf) {
     // this takes 2 things and makes them 1
@@ -38,7 +36,7 @@ function take (cnt) {
 }
 
 function skip (cnt) {
-  assertMod(cnt && cnt >= 0)
+  //assertMod(cnt && cnt >= 0)
   var count = 0
   return function (rf) {
     // this takes 2 things and makes them 1
