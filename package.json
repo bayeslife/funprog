@@ -1,11 +1,17 @@
 {
   "name": "funprog",
-  "version": "1.6.6",
+  "version": "1.6.7",
   "description": "A simple library for functional programming",
-  "main": "dist/lib.umd.js",
-  "unpkg": "dist/lib.umd.js",
+  "source": "index.js",
+  "main": "dist/funprog.js",
+  "module": "dist/funprog.mjs",
+  "main:umd": "dist/funprog.min.js",
+  "browser": "dist/funprog.min.js",
+  "unpkg": "dist/funprog.min.js",
   "file": [
-    "dist"
+    "dist",
+    "src",
+    "index.js"
   ],
   "scripts": {
     "build": "rollup -c",
@@ -31,6 +37,7 @@
     "nodemon": "^1.18.9",
     "rollup": "^1.0.0",
     "rollup-plugin-commonjs": "^9.2.0",
-    "rollup-plugin-node-resolve": "^4.0.0"
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-uglify": "^6.0.0"
   }
 }
