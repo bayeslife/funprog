@@ -1,6 +1,6 @@
 {
   "name": "funprog",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "description": "A simple library for functional programming",
   "main": "dist/lib.umd.js",
   "unpkg": "dist/lib.umd.js",

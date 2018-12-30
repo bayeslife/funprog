@@ -20,8 +20,6 @@ build:lint:
   stage: build
   script:
     - npm run lint
-    - npm run build
-
 
 build:test:
   stage: build
@@ -32,4 +30,5 @@ publish:
   stage: publish
   script:
     - echo '//registry.npmjs.org/:_authToken='$NPM_TOKEN > ~/.npmrc
+    - npm run build
     - npm publish
