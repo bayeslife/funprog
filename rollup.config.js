@@ -35,7 +35,7 @@ export default [
     input: 'index.js',
     output: {
       file: "dist/lib.umd.js",
-      name: "library",
+      name: "funprog",
       sourcemap: true,
       format: 'umd',
       banner
@@ -44,5 +44,20 @@ export default [
       resolve(),  // so Rollup can find external libs
       commonjs(), // so Rollup can convert commonJS to an ES module
     ]
-  }
+  },
+  // {
+  //   input: 'index.js',
+  //   output: {
+  //     file: "dist/lib.esm.js",
+  //     name: 'lib',
+  //     sourcemap: true,
+  //     format: 'esm',
+  //     banner
+  //   },
+  //   plugins: [
+  //     resolve(),
+  //     //commonjs(),
+  //     //json(jsonconfig)
+  //   ]
+  // }
 ]
