@@ -1,8 +1,5 @@
-var debug = require('debug')('funprog')
-
- const not = async (x) => {
+const not = async (x) => {
      var operand = await x
-    debug(`Not: ${operand}`)
     return !operand
  }
 
@@ -18,7 +15,7 @@ const modulus = val => x => x % val
 
 const select = property => x => x[property]
 
-module.exports = {
+export {
     isEven,
     modulus,
     isOdd,

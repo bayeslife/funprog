@@ -1,7 +1,7 @@
 const { identity, isEven, isGreaterThan, modulus, digitize, not, compose,
     transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator,
     take, skip, mapping, filtering, eventing,
-    makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('../index.js')
+    makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('..')
 const { nums, add1, sub1, concat } = require('./utility.js')
 
 var assert = require('assert')

@@ -1,37 +1,22 @@
-var { transduceAsyncIterator, transduceAsyncHasNextIterator, transduceArray } = require('./src/transducer.js')
+import { not, identity, isEven, isGreaterThan, digitize, modulus, select } from './src/operators.js'
 
-var { compose, concat } = require('./src/functionalprogramming.js')
+import { compose, concat } from './src/functionalprogramming.js'
 
-var { mapping, filtering, take, skip, eventing } = require('./src/transformer.js')
+import { transduceAsyncIterator, transduceAsyncHasNextIterator, transduceArray } from './src/transducer.js'
 
-var { not, identity, isEven, isGreaterThan, digitize ,modulus,select} = require('./src/operators.js')
+import { mapping, filtering, take, skip, eventing } from './src/transformer.js'
 
-var {   makeArrayIterator, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('./src/iterator.js')
+import { makeArrayIterator, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } from './src/iterator.js'
 
-module.exports = {
-    transduceAsyncIterator,
-    transduceAsyncHasNextIterator,
-    transduceArray,
+export {
 
-    makeArrayIterator,
-    makeAsyncRangeIterator,
-    makeAsyncHasNextRangeIterator,
+    not, identity, isEven, isGreaterThan, digitize, modulus, select,
 
-    compose,
+    compose, concat,
 
-    mapping,
-    filtering,
-    take,
-    skip,
-    eventing,
+    transduceAsyncIterator, transduceAsyncHasNextIterator, transduceArray,
 
-    concat,
+    mapping, filtering, take, skip, eventing,
 
-    not, 
-    identity, 
-    isEven, 
-    isGreaterThan,
-    digitize,
-    modulus,
-    select
+    makeArrayIterator, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator
 }

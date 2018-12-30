@@ -1,5 +1,4 @@
 var assertMod = require('assert')
-var debug = require('debug')('funprog')
 
 // generalize the 'mapping' concept, without the concat...
 function mapping (f) {
@@ -7,7 +6,6 @@ function mapping (f) {
       // this takes 2 things and makes them 1
       return async (acc, val) => {
         var m = await f(val)
-        debug(`Map`)
         return rf(acc, m) // <-- rf replaces 'concat'
       }
     }
@@ -19,7 +17,6 @@ function mapping (f) {
       // this takes 2 things and makes them 1
       return async (acc, val) => {
         var pred = (await p(val))
-        debug(`Filter ${pred}`)
         return pred ? rf(acc, val) : acc // <-- rf replaces 'concat'
       }
     }
@@ -62,7 +59,6 @@ function eventing (p) {
     return async (acc, val) => {
       sequence++
       var pred = (await p(val))
-      debug(`Check continuation ${pred}`)
       if (pred && !latest) {
         latest = {
           start: val.time ? val.time : sequence,
@@ -75,7 +71,6 @@ function eventing (p) {
       } else if (!pred && latest) {
         var next = latest
         latest = null
-        debug(`reduce with ${next.start}-${next.end}`)
         return rf(acc, next)
       } else {
         return acc
@@ -84,7 +79,7 @@ function eventing (p) {
   }
 }
 
-module.exports = {
+export {
   mapping,
   filtering,
   take,

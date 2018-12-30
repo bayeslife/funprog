@@ -40,7 +40,7 @@ function makeArrayIterator (dataArray) {
         }
     }
 
-module.exports = {
+export {
   makeArrayIterator,
   makeAsyncRangeIterator,
   makeAsyncHasNextRangeIterator

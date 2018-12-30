@@ -11,7 +11,7 @@ function concat (xs, val) {
     return xs.concat(val)
 }
 
-module.exports = {
+export {
     compose,
     concat
 }

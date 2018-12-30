@@ -37,7 +37,7 @@ async function transduceArray (xf, rf, init, xs) {
     return xs.reduce(xrf, init)
 }
 
-module.exports = {
+export {
     transduceAsyncIterator,
     transduceAsyncHasNextIterator,
     transduceArray
