@@ -1,3 +1,13 @@
+
+function passthrough () {
+  return function (rf) {
+    // this takes 2 things and makes them 1
+    return async (acc, val) => {
+      return rf(acc, val) // <-- rf replaces 'concat'
+    }
+  }
+}
+
 // generalize the 'mapping' concept, without the concat...
 function mapping (f) {
     return function (rf) {
@@ -98,6 +108,7 @@ function eventing (p) {
 }
 
 export {
+  passthrough,
   mapping,
   filtering,
   take,
