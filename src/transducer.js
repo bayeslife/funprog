@@ -45,6 +45,7 @@ async function * transduceGenerator (transform, reducerfunction, init, streamgen
         if (newinit === init) {
             continue
         } else {
+            init = newinit
             yield newinit
         }
     }
