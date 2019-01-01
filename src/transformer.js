@@ -50,6 +50,26 @@ function skip (cnt) {
   }
 }
 
+function sampling (period) {
+  // assertMod(cnt && cnt >= 0)
+  var last = 0
+  return function (rf) {
+    return async (acc, val) => {
+      var nw = Date.now()
+      var diff = nw - last
+      //console.log(diff)
+      if (diff < period) {
+        //console.log('Skip' + val)
+        return acc
+      } else {
+        last = nw
+        //console.log('Accept' + val)
+        return rf(acc, val)
+      }
+    }
+  }
+}
+
 function eventing (p) {
   var latest = null
   var sequence = -1
@@ -82,5 +102,6 @@ export {
   filtering,
   take,
   skip,
-  eventing
+  eventing,
+  sampling
 }

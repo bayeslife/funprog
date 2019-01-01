@@ -2,9 +2,9 @@ import { not, identity, isEven, isGreaterThan, digitize, modulus, select } from 
 
 import { compose, concat } from './src/functionalprogramming.js'
 
-import { transduceAsyncIterator, transduceAsyncHasNextIterator, transduceArray , transduceGenerator } from './src/transducer.js'
+import { transduceAsyncIterator, transduceAsyncHasNextIterator, transduceArray, transduceGenerator } from './src/transducer.js'
 
-import { mapping, filtering, take, skip, eventing } from './src/transformer.js'
+import { mapping, filtering, take, skip, eventing, sampling } from './src/transformer.js'
 
 import { makeArrayIterator, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } from './src/iterator.js'
 
@@ -16,7 +16,7 @@ export {
 
     transduceAsyncIterator, transduceAsyncHasNextIterator, transduceArray, transduceGenerator,
 
-    mapping, filtering, take, skip, eventing,
+    mapping, filtering, take, skip, eventing, sampling,
 
     makeArrayIterator, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator
 }

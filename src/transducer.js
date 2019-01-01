@@ -43,7 +43,6 @@ async function * transduceGenerator (transform, reducerfunction, init, streamgen
         var newinit = await reducer(init, value)
         // Here we checked if there is new a 'reduced' value and only generate a new value when this is the case
         if (newinit === init) {
-            continue
         } else {
             init = newinit
             yield newinit

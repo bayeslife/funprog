@@ -15,6 +15,13 @@ async function useNew (accumulator, newValue) {
   return newValue
 }
 
+async function delay (accumulator, newValue) {
+  await new Promise((resolve) => {
+    setTimeout(() => resolve(), 1000)
+  })
+  return newValue
+}
+
 module.exports = {
   nums,
   add1,
@@ -22,5 +29,6 @@ module.exports = {
   doubleIt,
   add,
   concat,
-  useNew
+  useNew,
+  delay
 }

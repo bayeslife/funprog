@@ -1,12 +1,12 @@
 
-async function * makeAsyncRangeIterator (start = 0, end = Infinity, step = 1) {
+async function * makeAsyncRangeIterator (start = 0, end = Infinity, step = 1, delay = 10) {
     let iterationCount = 0
     for (let i = start; i < end; i += step) {
         iterationCount++
         yield new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(i)
-            }, 10)
+            }, delay)
         })
     }
     return iterationCount

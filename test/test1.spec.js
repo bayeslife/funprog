@@ -1,8 +1,8 @@
 const { identity, isEven, isGreaterThan, modulus, digitize, not, compose,
     transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, transduceGenerator,
-    take, skip, mapping, filtering, eventing,
+    take, skip, mapping, filtering, eventing, sampling,
     makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('..')
-const { nums, add1, sub1, concat, useNew } = require('./utility.js')
+const { nums, add1, sub1, concat, useNew, delay } = require('./utility.js')
 
 var assert = require('assert')
 
@@ -77,7 +77,7 @@ describe('Given the functional programming library', function () {
         assert.equal(result[1].start, 3)
         assert.equal(result[1].end, 4)
     })
-    it.only('Then able build a transformed generator', async function () {
+    it('Then able build a transformed generator', async function () {
         const deltaxform = compose(
             skip(3),
             mapping(modulus(3))
@@ -88,5 +88,21 @@ describe('Given the functional programming library', function () {
             assert.equal(value, 1)
             break
         }
+    })
+    it('Then able sample from generator', async function () {
+        const deltaxform = sampling(300) // emit a value every 300 milliseconds if available
+        const generator = makeAsyncRangeIterator(1, 10, 1, 100) // generator 1 through 10 by ones every 100 milliseconds
+        var newgenerator = await transduceGenerator(deltaxform, useNew, null, generator)
+        var cnt = 0
+        var last = null
+        //the values here will be 1,4,7
+        for await (const value of newgenerator) {
+            cnt++
+            if (cnt >= 3) {
+                last = value
+                break
+            }
+        }
+        assert.equal(last, 7)
     })
 })
