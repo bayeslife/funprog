@@ -1,6 +1,6 @@
 const { identity, isEven, isGreaterThan, modulus, digitize, not, compose,
     transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, transduceGenerator,
-    take, skip, mapping, filtering, eventing, sampling,
+    take, skip, mapping, filtering, eventing, sampling, passthrough,
     makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('..')
 const { nums, add1, sub1, concat, useNew, delay } = require('./utility.js')
 
@@ -14,11 +14,26 @@ filtering(isEven)
 // mapping(add1),
 )
 describe('Given the functional programming library', function () {
-it('Then compose not and operation', async function () {
-    var f = compose(not, sub1)
-    assert.equal(true, await f(1))
-    assert.equal(false, await f(0))
+    it('Then compose not and operation', async function () {
+        var f = compose(not, sub1)
+        assert.equal(true, await f(1))
+        assert.equal(false, await f(0))
+    })
 })
+
+describe('Given the transform functions', function () {
+    it('Then mapping identity is a no-op', async function () {
+        var f = mapping(identity)
+        var rf = await f(concat)
+        var val = await rf([1], [])
+        assert.equal(1, val[0])
+    })
+    it('Then passthrough is a no-op', async function () {
+        var f = passthrough()
+        var rf = await f(concat)
+        var val = await rf([1], [])
+        assert.equal(1, val[0])
+    })
 })
 
 describe('Given the functional programming library', function () {

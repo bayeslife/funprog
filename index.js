@@ -1,6 +1,8 @@
 import { not, identity, isEven, isGreaterThan, digitize, modulus, select } from './src/operators.js'
 
-import { compose, concat } from './src/functionalprogramming.js'
+import { compose } from './src/functionalprogramming.js'
+
+import { concat, latest } from './src/reducer.js'
 
 import { transduceAsyncIterator, transduceAsyncHasNextIterator, transduceArray, transduceGenerator } from './src/transducer.js'
 
@@ -12,7 +14,9 @@ export {
 
     not, identity, isEven, isGreaterThan, digitize, modulus, select,
 
-    compose, concat,
+    compose,
+
+    concat, latest,
 
     transduceAsyncIterator, transduceAsyncHasNextIterator, transduceArray, transduceGenerator,
 

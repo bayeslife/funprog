@@ -7,11 +7,6 @@ function compose (...funcs) {
     return x => funcs.reduceRight(apply, x)
 }
 
-function concat (xs, val) {
-    return xs.concat(val)
-}
-
 export {
-    compose,
-    concat
+    compose
 }
