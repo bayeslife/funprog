@@ -37,8 +37,22 @@ async function transduceArray (xf, rf, init, xs) {
     return xs.reduce(xrf, init)
 }
 
+async function * transduceGenerator (transform, reducerfunction, init, streamgenerator) {
+    var reducer = transform(reducerfunction)
+    for await (const value of streamgenerator) {
+        var newinit = await reducer(init, value)
+        // Here we checked if there is new a 'reduced' value and only generate a new value when this is the case
+        if (newinit === init) {
+            continue
+        } else {
+            yield newinit
+        }
+    }
+}
+
 export {
     transduceAsyncIterator,
     transduceAsyncHasNextIterator,
-    transduceArray
+    transduceArray,
+    transduceGenerator
 }

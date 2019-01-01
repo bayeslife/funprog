@@ -11,11 +11,16 @@ async function concat (xs, val) {
     return x.concat(val)
 }
 
+async function useNew (accumulator, newValue) {
+  return newValue
+}
+
 module.exports = {
   nums,
   add1,
   sub1,
   doubleIt,
   add,
-  concat
+  concat,
+  useNew
 }
