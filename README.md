@@ -4,6 +4,62 @@
 
 I was specifically wanting to try using [transducers](https://medium.com/javascript-scene/transducers-efficient-data-processing-pipelines-in-javascript-7985330fe73d) to modify a stream of data generated from an asynchronous iterator.
 
+e.g.
+```
+async function(){
+    for await (const v of generator) {
+        console.log(v)
+    }
+}
+```
+
+Where the generator is an async generator such as
+```
+async function * makeAsyncRangeIterator (start = 0, end = Infinity, step = 1, delay = 10) {
+    let iterationCount = 0
+    for (let i = start; i < end; i += step) {
+        iterationCount++
+        yield new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(i)
+            }, delay)
+        })
+    }
+    return iterationCount
+  }
+  ```
+  or another example would be to process of stream of documents being inserted into a Mongo DB database
+  ```
+async function makeGenerator(config){
+    
+    const client = await mongoClient.connect(config.MONGO_SERVER);
+    const collection = client.db(config.MONGO_DB).collection(config.MONGO_COLLECTION);
+
+    return async function* () {
+        const pipeline = [
+            { $project : { 
+                    "AssetId": "$fullDocument.AssetId", 
+                    "Epoch": "$fullDocument.Epoch", 
+                    "Value": "$fullDocument.Value", 
+                    "SiteId": "$fullDocument.SiteId" } }
+        ]
+        const changeStream = collection.watch(pipeline,{
+            startAtOperationTime: new Date( )
+        });
+    
+        while(true){
+            var change = await new Promise( (resolve) =>{
+                changeStream.on("change", function(change) {
+                    resolve(change)
+                });
+            })
+            delete change._id
+            yield change
+        }
+    }()
+}
+  ```
+
 I found a number of functional programming libraries (tranducer.js, ramda) but found they didnt support asynchronous iterators.  They appear to only support synchronous functionality.
 
 ## How to use
