@@ -2,7 +2,7 @@
 
 ## Why this library
 
-I was specifically wanting to try using transducers to modify a stream of data generated from an asynchronous iterator.
+I was specifically wanting to try using [transducers](https://medium.com/javascript-scene/transducers-efficient-data-processing-pipelines-in-javascript-7985330fe73d) to modify a stream of data generated from an asynchronous iterator.
 
 I found a number of functional programming libraries (tranducer.js, ramda) but found they didnt support asynchronous iterators.  They appear to only support synchronous functionality.
 
@@ -32,12 +32,13 @@ There are a number of operators which generally take a value and return another 
 ### Stream Transforms
 
 The transforms operate the stream of values
-
-- mapping,
-- filtering,
-- take,
-- skip,
-- eventing
+- mapping - produce a transformed value for each value in the stream
+- filtering - remove some items from a stream based on a predicate
+- take - stop generator when a limit is reached
+- skip - skip values until a threshold is acheived
+- eventing - combines a set of measurements (single point in time) into events (which have a start/end/duration)
+- sampling - Sample at a lower frequence than the values are being produced
+- passthrough - map each event to itself
 
 ### Generators
 
