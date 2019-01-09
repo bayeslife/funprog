@@ -45,7 +45,13 @@ async function * transduceGenerator (transform, reducerfunction, init, streamgen
         if (newinit === init) {
         } else {
             init = newinit
-            yield newinit
+            if (Array.isArray(newinit)) {
+                for (var i = 0; i < newinit.length; i++) {
+                    yield newinit[i]
+                }
+            } else {
+                yield newinit
+            }
         }
     }
 }

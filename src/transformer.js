@@ -115,12 +115,17 @@ function split (f) {
   return function (rf) {
     // this takes 2 things and makes them 1
     return async (acc, val) => {
-      var records = await f(val)
-      var updatedaccumulator = acc
-      for (const record of records) {
-        updatedaccumulator = rf(updatedaccumulator, record)
+      var rs = await f(val)
+      var reduced = []
+      try {
+        for (var i = 0; i < rs.length; i++) {
+          var r = rs[i]
+          reduced.push(r)
+        }
+      } catch (ex) {
+        console.log(ex)
       }
-      return updatedaccumulator
+      return reduced
     }
   }
 }
