@@ -118,9 +118,11 @@ function split (f) {
       var rs = await f(val)
       var reduced = []
       try {
+        var acc2 = acc
         for (var i = 0; i < rs.length; i++) {
           var r = rs[i]
-          reduced.push(r)
+          acc2 = await rf(acc2, r)
+          reduced.push(acc2)
         }
       } catch (ex) {
         console.log(ex)

@@ -1,5 +1,4 @@
 
-
 function concat (accumlator, val) {
     return accumlator.concat(val)
 }

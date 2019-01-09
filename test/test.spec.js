@@ -120,9 +120,12 @@ describe('Given the functional programming library', function () {
         }
         assert.equal(last, 7)
     })
-    it('Then able to split from generator', async function () {
+    it.only('Then able to split from generator', async function () {
         var duplicate = x => [x, x] // a function which maps a value to an array.
-        const deltaxform = split(duplicate) // replicate each value
+        const deltaxform = compose(
+            split(duplicate), // replicate each value
+            take(5)
+        )
         const generator = makeAsyncRangeIterator(1, 10) // generator 1 through 10 by ones every 100 milliseconds
         var newgenerator = await transduceGenerator(deltaxform, useNew, null, generator)
         var cnt = 0
@@ -130,14 +133,14 @@ describe('Given the functional programming library', function () {
         for await (const value of newgenerator) {
             stream.push(value)
             cnt++
-            if (cnt >= 10) {
+            if (cnt >= 5) {
                 newgenerator.return()
             }
         }
-        // stream should be [ 1, 1, 2, 2, 3, 3, 4, 4, 5, 5 ]
+        // stream should be [ 1, 1, 2, 2, 3 ]
         assert.equal(stream[0], 1)
         assert.equal(stream[1], 1)
         assert.equal(stream[2], 2)
-        assert.equal(stream[9], 5)
+        assert.equal(stream[4], 3)
     })
 })
