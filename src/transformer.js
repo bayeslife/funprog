@@ -14,7 +14,16 @@ function mapping (f) {
       // this takes 2 things and makes them 1
       return async (acc, val) => {
         var m = await f(val)
-        return rf(acc, m) // <-- rf replaces 'concat'
+        var r = await rf(acc, m) // <-- rf replaces 'concat'
+        if (r.hasOwnProperty('reduced')) {
+          if (r.reduced) {
+            return r
+          } else {
+            return acc
+          }
+        } else {
+          return r
+        }
       }
     }
   }
@@ -37,7 +46,9 @@ function take (cnt) {
     // this takes 2 things and makes them 1
     return async (acc, val) => {
       if ((--count) < 0) {
-        return acc
+        return {
+          reduced: null
+        }
       } else {
         return rf(acc, val)
       }
@@ -116,18 +127,24 @@ function split (f) {
     // this takes 2 things and makes them 1
     return async (acc, val) => {
       var rs = await f(val)
-      var reduced = []
+      var reduction = { reduced: [] }
       try {
         var acc2 = acc
         for (var i = 0; i < rs.length; i++) {
           var r = rs[i]
           acc2 = await rf(acc2, r)
-          reduced.push(acc2)
+          if (acc2.hasOwnProperty('reduced')) {
+            if (acc2.reduced) {
+              reduction.reduced.push(acc2.reduced)
+            }
+          } else {
+            reduction.reduced.push(acc2)
+          }
         }
+        return reduction
       } catch (ex) {
         console.log(ex)
       }
-      return reduced
     }
   }
 }

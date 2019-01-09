@@ -21,7 +21,11 @@ async function transduceAsyncHasNextIterator (transform, reducerfunction, init, 
         if (n) {
             var v = await asynchasnextiterator.next()
             r = await reducer(init, v)
-            if (r) {
+            if (r.hasOwnProperty('reduced')) {
+                if (r.reduced) {
+                    init = r.reduced
+                }
+            } else if (r) {
                 init = r
             }
         }
@@ -42,14 +46,16 @@ async function * transduceGenerator (transform, reducerfunction, init, streamgen
     for await (const value of streamgenerator) {
         var newinit = await reducer(init, value)
         // Here we checked if there is new a 'reduced' value and only generate a new value when this is the case
-        if (newinit === init) {
+        if (!newinit) {
+        } else if (newinit === init) {
         } else {
-            init = newinit
-            if (Array.isArray(newinit)) {
-                for (var i = 0; i < newinit.length; i++) {
-                    yield newinit[i]
+            if (newinit.reduced) {
+                for (var i = 0; i < newinit.reduced.length; i++) {
+                    init = newinit.reduced[i]
+                    yield newinit.reduced[i]
                 }
             } else {
+                init = newinit
                 yield newinit
             }
         }
