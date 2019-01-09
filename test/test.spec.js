@@ -1,7 +1,7 @@
 const { identity, isEven, isGreaterThan, modulus, digitize, not, compose,
     transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, transduceGenerator,
-    take, skip, mapping, filtering, eventing, sampling, passthrough,
-    makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('..')
+    take, skip, mapping, filtering, eventing, sampling, passthrough, split,
+    makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('../dist/funprog.umd')
 const { nums, add1, sub1, concat, useNew, delay } = require('./utility.js')
 
 var assert = require('assert')
@@ -110,7 +110,7 @@ describe('Given the functional programming library', function () {
         var newgenerator = await transduceGenerator(deltaxform, useNew, null, generator)
         var cnt = 0
         var last = null
-        //the values here will be 1,4,7
+        // the values here will be 1,4,7
         for await (const value of newgenerator) {
             cnt++
             if (cnt >= 3) {
@@ -119,5 +119,11 @@ describe('Given the functional programming library', function () {
             }
         }
         assert.equal(last, 7)
+    })
+    it('Then able to split from generator', async function () {
+        var duplicate = x => [x, x] // a function which maps a value to an array.
+        const deltaxform = split(duplicate) // replicate each value
+        const result = await transduceArray(deltaxform, concat, [], nums)
+        assert.equal(result.length, 20)
     })
 })

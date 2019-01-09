@@ -95,6 +95,7 @@ The transforms operate the stream of values
 - eventing - combines a set of measurements (single point in time) into events (which have a start/end/duration)
 - sampling - Sample at a lower frequence than the values are being produced
 - passthrough - map each event to itself
+- split - maps from a stream of N events into a stream of N+ events by splitting one event into multiple
 
 ### Generators
 

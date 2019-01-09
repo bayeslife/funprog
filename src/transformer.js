@@ -67,13 +67,13 @@ function sampling (period) {
     return async (acc, val) => {
       var nw = Date.now()
       var diff = nw - last
-      //console.log(diff)
+      // console.log(diff)
       if (diff < period) {
-        //console.log('Skip' + val)
+        // console.log('Skip' + val)
         return acc
       } else {
         last = nw
-        //console.log('Accept' + val)
+        // console.log('Accept' + val)
         return rf(acc, val)
       }
     }
@@ -107,6 +107,24 @@ function eventing (p) {
   }
 }
 
+/*
+ *  Split one event into multiple
+ *  f is a function which maps a value to an array
+ */
+function split (f) {
+  return function (rf) {
+    // this takes 2 things and makes them 1
+    return async (acc, val) => {
+      var records = await f(val)
+      var updatedaccumulator = acc
+      for (const record of records) {
+        updatedaccumulator = rf(updatedaccumulator, record)
+      }
+      return updatedaccumulator
+    }
+  }
+}
+
 export {
   passthrough,
   mapping,
@@ -114,5 +132,6 @@ export {
   take,
   skip,
   eventing,
-  sampling
+  sampling,
+  split
 }
