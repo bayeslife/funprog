@@ -121,12 +121,15 @@ describe('Given the functional programming library', function () {
         assert.equal(last, 7)
     })
     it('Then able to split from generator', async function () {
-        var duplicate = x => [x, x] // a function which maps a value to an array.
-        const deltaxform = compose(
+        var duplicate = function (x) {
+            return [x, x] // a function which maps a value to an array.
+        }
+        var deltaxform = compose(
             mapping(identity),
             split(duplicate), // replicate each value
             take(5)
         )
+
         const generator = makeAsyncRangeIterator(1, 10) // generator 1 through 10 by ones every 100 milliseconds
         var newgenerator = await transduceGenerator(deltaxform, useNew, null, generator)
         var cnt = 0

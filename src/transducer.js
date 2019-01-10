@@ -49,10 +49,12 @@ async function * transduceGenerator (transform, reducerfunction, init, streamgen
         if (!newinit) {
         } else if (newinit === init) {
         } else {
-            if (newinit.reduced) {
-                for (var i = 0; i < newinit.reduced.length; i++) {
-                    init = newinit.reduced[i]
-                    yield newinit.reduced[i]
+            if (newinit.hasOwnProperty('reduced')) {
+                if (Array.isArray(newinit.reduced)) {
+                    for (var i = 0; i < newinit.reduced.length; i++) {
+                        init = newinit.reduced[i]
+                        yield newinit.reduced[i]
+                    }
                 }
             } else {
                 init = newinit
