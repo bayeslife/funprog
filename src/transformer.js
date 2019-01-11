@@ -34,7 +34,7 @@ function mapping (f) {
       // this takes 2 things and makes them 1
       return async (acc, val) => {
         var pred = (await p(val))
-        return pred ? rf(acc, val) : acc // <-- rf replaces 'concat'
+        return pred ? rf(acc, val) : { reduced: null } // <-- rf replaces 'concat'
       }
     }
   }
