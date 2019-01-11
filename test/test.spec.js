@@ -120,7 +120,7 @@ describe('Given the functional programming library', function () {
         }
         assert.equal(last, 7)
     })
-    it.only('Then able to split from generator', async function () {
+    it('Then able to split from generator', async function () {
         var duplicate = function (x) {
             return [x, x] // a function which maps a value to an array.
         }

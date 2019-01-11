@@ -1,4 +1,7 @@
 
+/**
+ * Passes all events
+ */
 function passthrough () {
   return function (rf) {
     // this takes 2 things and makes them 1
@@ -8,8 +11,10 @@ function passthrough () {
   }
 }
 
-// generalize the 'mapping' concept, without the concat...
-function mapping (f) {
+/**
+ * Performs a mapping operation on each record in the stream
+ * @param {*} f
+ */function mapping (f) {
     return function (rf) {
       // this takes 2 things and makes them 1
       return async (acc, val) => {
@@ -28,7 +33,10 @@ function mapping (f) {
     }
   }
 
-  // generalize the 'filtering' concept, without the concat...
+  /**
+   * Removes records from the stream if the dont match the predicate
+   * @param {*} p
+   */
   function filtering (p) {
     return function (rf) {
       // this takes 2 things and makes them 1
@@ -39,9 +47,13 @@ function mapping (f) {
     }
   }
 
-function take (cnt) {
-  // assert(cnt && cnt > 0)
-  var count = cnt
+  /**
+   * Takes toTake records from the stream
+   * @param {*} toTake
+   */
+function take (toTake) {
+  // assert(toTake && cnt > 0)
+  var count = toTake
   return function (rf) {
     // this takes 2 things and makes them 1
     return async (acc, val) => {
@@ -56,14 +68,18 @@ function take (cnt) {
   }
 }
 
-function skip (cnt) {
-  // assertMod(cnt && cnt >= 0)
+/**
+ * Skips forward in a stream by the toSkip records
+ * @param {*} toSkip
+ */
+function skip (toSkip) {
+  // assertMod(toSkip && toSkip >= 0)
   var count = 0
   return function (rf) {
     // this takes 2 things and makes them 1
     return async (acc, val) => {
-      if (count++ < cnt) {
-        return acc
+      if (count++ < toSkip) {
+        return { reduced: null }
       } else {
         return rf(acc, val)
       }
@@ -71,6 +87,11 @@ function skip (cnt) {
   }
 }
 
+/**
+ * Samples from a stream at a particular frequency.
+ * sample(1000) will sample a value once every second
+ * @param {*} period
+ */
 function sampling (period) {
   // assertMod(cnt && cnt >= 0)
   var last = 0
@@ -81,7 +102,7 @@ function sampling (period) {
       // console.log(diff)
       if (diff < period) {
         // console.log('Skip' + val)
-        return acc
+        return { reduced: null }
       } else {
         last = nw
         // console.log('Accept' + val)
@@ -91,42 +112,46 @@ function sampling (period) {
   }
 }
 
-function eventing (p) {
+/**
+ * Transforms a series of measurements into events.  The predicate determines when the measurements continue the event or non-event
+ * @param {*} predicate
+ */
+function eventing (predicate) {
   var latest = null
   var sequence = -1
   return function (rf) {
     return async (acc, val) => {
       sequence++
-      var pred = (await p(val))
+      var pred = (await predicate(val))
       if (pred && !latest) {
         latest = {
           start: val.time ? val.time : sequence,
           end: val.time ? val.time : sequence
         }
-        return acc
+        return { reduced: null }
       } else if (pred && latest) {
         latest.end = val.time ? val.time : sequence
-        return acc
+        return { reduced: null }
       } else if (!pred && latest) {
         var next = latest
         latest = null
         return rf(acc, next)
       } else {
-        return acc
+        return { reduced: null }
       }
     }
   }
 }
 
-/*
+/**
  *  Split one event into multiple
- *  f is a function which maps a value to an array
+ *  splitter is a function which maps a value to an array
  */
-function split (f) {
+function split (splitter) {
   return function (rf) {
     // this takes 2 things and makes them 1
     return async (acc, val) => {
-      var rs = await f(val)
+      var rs = await splitter(val)
       var reduction = { reduced: [] }
       try {
         var acc2 = acc
