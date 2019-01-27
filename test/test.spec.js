@@ -1,6 +1,6 @@
 const { identity, isEven, isGreaterThan, modulus, digitize, not, compose,
     transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, transduceGenerator,
-    take, skip, mapping, filtering, eventing, sampling, passthrough, split, latest,
+    take, skip, mapping, filtering, eventing, sampling, passthrough, split, randomFilter,
     makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('../dist/funprog.umd')
 const { nums, add1, sub1, concat, useNew, delay } = require('./utility.js')
 
@@ -33,6 +33,18 @@ describe('Given the transform functions', function () {
         var rf = await f(concat)
         var val = await rf([1], [])
         assert.equal(1, val[0])
+    })
+    it('Then randomFilter(1) is always includes', async function () {
+        var f = randomFilter(1)
+        var rf = await f(concat)
+        var val = await rf([], 1)
+        assert.equal(1, val.length)
+    })
+    it('Then randomFilter(0) is always eliminates', async function () {
+        var f = randomFilter(-1)
+        var rf = await f(concat)
+        var val = await rf([], 1)
+        assert.ok(val.reduced === null)
     })
 })
 

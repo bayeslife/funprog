@@ -174,6 +174,25 @@ function split (splitter) {
   }
 }
 
+/**
+ * Randomly samples from a stream with a target frequency.
+ * randomFilter(100) will target to sample one value in every 100
+ * @param {*} countFrequency - a number
+ */
+function randomFilter (countFrequency) {
+  // assertMod(cnt && cnt >= 0
+  return function (rf) {
+    return async (acc, val) => {
+      var rand = Math.floor((Math.random() * countFrequency))
+      if (rand === 0) {
+        return rf(acc, val)
+      } else {
+        return { reduced: null }
+      }
+    }
+  }
+}
+
 export {
   passthrough,
   mapping,
@@ -182,5 +201,6 @@ export {
   skip,
   eventing,
   sampling,
-  split
+  split,
+  randomFilter
 }

@@ -96,6 +96,7 @@ The transforms operate the stream of values
 - sampling - Sample at a lower frequence than the values are being produced
 - passthrough - map each event to itself
 - split - maps from a stream of N events into a stream of N+ events by splitting one event into multiple
+- randomFilter - randomly includes values at a predefined frequency
 
 ### Generators
 

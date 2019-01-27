@@ -6,7 +6,7 @@ import { concat, latest } from './src/reducer.js'
 
 import { transduceAsyncIterator, transduceAsyncHasNextIterator, transduceArray, transduceGenerator } from './src/transducer.js'
 
-import { mapping, filtering, take, skip, eventing, sampling, passthrough, split } from './src/transformer.js'
+import { mapping, filtering, take, skip, eventing, sampling, passthrough, split, randomFilter } from './src/transformer.js'
 
 import { makeArrayIterator, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } from './src/iterator.js'
 
@@ -20,7 +20,7 @@ export {
 
     transduceAsyncIterator, transduceAsyncHasNextIterator, transduceArray, transduceGenerator,
 
-    mapping, filtering, take, skip, eventing, sampling, passthrough, split,
+    mapping, filtering, take, skip, eventing, sampling, passthrough, split, randomFilter,
 
     makeArrayIterator, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator
 }
