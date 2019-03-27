@@ -130,4 +130,4 @@ Use `npm start` to run the unit tests
 
 ## Explanations
 
-[Further explanations](./EXAMPLES.md)
+[Further explanations](./EXPLANTAION.md)
