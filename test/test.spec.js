@@ -1,6 +1,6 @@
 const { identity, isEven, isGreaterThan, modulus, digitize, not, compose,
     transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, transduceGenerator,
-    take, skip, mapping, filtering, eventing, sampling, passthrough, split, randomFilter,
+    take, skip, mapping, filtering, eventing, sampling, passthrough, split, randomFilter, neighbors,
     makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('../dist/funprog.umd')
 const { nums, add1, sub1, concat, useNew, delay } = require('./utility.js')
 
@@ -154,5 +154,35 @@ describe('Given the functional programming library', function () {
         assert.equal(stream[1], 2)
         assert.equal(stream[2], 4)
         assert.equal(stream[4], 6)
+    })
+    it('Then use neighbors to get average of n to n+5 records inclusive of itself as n record is processed', async function () {
+        var enrich = function (x) {
+            let sum = x.neighbors.reduce((x, y) => x + y, 0)
+            let avg = sum / x.neighbors.length
+            let diff = x.data - avg
+            return {
+                data: x.data,
+                diff: diff
+            }
+        }
+        var deltaxform = compose(
+            mapping(identity),
+            neighbors(5),
+            mapping(enrich)
+        )
+        const generator = makeAsyncRangeIterator(1, 10) // generator 1 through 10 by ones every 100 milliseconds
+        var newgenerator = await transduceGenerator(deltaxform, useNew, null, generator)
+        var stream = []
+        for await (const value of newgenerator) {
+            stream.push(value)
+        }
+        assert.equal(stream[0].data, 1)
+        assert.equal(stream[0].diff, -2)
+        assert.equal(stream[1].data, 2)
+        assert.equal(stream[1].diff, -2)
+        assert.equal(stream[2].data, 3)
+        assert.equal(stream[2].diff, -2)
+        assert.equal(stream[3].data, 4)
+        assert.equal(stream[3].diff, -2)
     })
 })

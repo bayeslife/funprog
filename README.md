@@ -97,6 +97,7 @@ The transforms operate the stream of values
 - passthrough - map each event to itself
 - split - maps from a stream of N events into a stream of N+ events by splitting one event into multiple
 - randomFilter - randomly includes values at a predefined frequency
+- neighbors - make n to n + m future stream events available as nth event is processed
 
 ### Generators
 
@@ -125,3 +126,8 @@ The transducer reads from the generator transforms the value and reduces using t
 ## Tests
 
 Use `npm start` to run the unit tests
+
+
+## Explanations
+
+[Further explanations](./EXAMPLES.md)

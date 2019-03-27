@@ -193,6 +193,33 @@ function randomFilter (countFrequency) {
   }
 }
 
+ /**
+   * Make n neighbors available as each stream record is processed.
+   * @param {*} numberOfNeighbors
+   */
+  function neighbors (numNeighbors = 10) {
+    var neighbors = []
+
+    return function (rf) {
+      return async (acc, val) => {
+        neighbors.push(val)
+        if ((neighbors.length) < numNeighbors) {
+          return {
+            reduced: null
+          }
+        } else {
+          let first = neighbors[0]
+          let enriched = Object.assign({}, first)
+          enriched.neighbors = neighbors
+          enriched.data = first
+          let res = rf(acc, enriched)
+          neighbors.shift()
+          return res
+        }
+      }
+    }
+  }
+
 export {
   passthrough,
   mapping,
@@ -202,5 +229,6 @@ export {
   eventing,
   sampling,
   split,
-  randomFilter
+  randomFilter,
+  neighbors
 }
