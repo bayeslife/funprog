@@ -1,4 +1,4 @@
-const { identity, isEven, isGreaterThan, modulus, digitize, not, compose,
+const { identity, isEven, isGreaterThan, modulus, digitize, not, compose, asyncCompose,
     transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, transduceGenerator,
     take, skip, mapping, filtering, eventing, sampling, passthrough, split, randomFilter, neighbors,
     makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('../dist/funprog.umd')
@@ -10,14 +10,18 @@ const xform = compose(
 mapping(isGreaterThan(6)),
 mapping(add1),
 filtering(isEven)
-// mapping(doubleIt),
-// mapping(add1),
 )
 describe('Given the functional programming library', function () {
     it('Then compose not and operation', async function () {
         var f = compose(not, sub1)
         assert.equal(true, await f(1))
         assert.equal(false, await f(0))
+    })
+    it('Then asyncPipe', async function () {
+         const add1 = (v) => Promise.resolve(v + 1)
+        const times10 = (v) => Promise.resolve(v * 10)
+        var f = asyncCompose(add1, times10)
+        assert.equal(20, await f(1))
     })
 })
 

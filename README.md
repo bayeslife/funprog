@@ -122,6 +122,12 @@ The transducer reads from the generator transforms the value and reduces using t
  - transduceAsyncHasNextIterator,
  - transduceArray
 
+### Composition
+
+Functions that compose functions together 
+
+- compose - reduce payload processed by array of functions
+- asyncCompose - reduce payload processed by array of functions returning promises
 
 ## Tests
 

@@ -1,6 +1,6 @@
 import { not, identity, isEven, isGreaterThan, digitize, modulus, select } from './src/operators.js'
 
-import { compose } from './src/functionalprogramming.js'
+import { compose, asyncCompose, apply } from './src/functionalprogramming.js'
 
 import { concat, latest } from './src/reducer.js'
 
@@ -14,7 +14,7 @@ export {
 
     not, identity, isEven, isGreaterThan, digitize, modulus, select,
 
-    compose,
+    compose, asyncCompose, apply,
 
     concat, latest,
 
