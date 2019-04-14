@@ -10,17 +10,40 @@ import { mapping, filtering, take, skip, eventing, sampling, passthrough, split,
 
 import { makeArrayIterator, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } from './src/iterator.js'
 
-export {
+export default {
 
-    not, identity, isEven, isGreaterThan, digitize, modulus, select,
+    not,
+    identity,
+    isEven,
+    isGreaterThan,
+    digitize,
+    modulus,
+    select,
 
-    compose, asyncCompose, apply,
+    compose,
+    asyncCompose,
+    apply,
 
-    concat, latest,
+    concat,
+    latest,
 
-    transduceAsyncIterator, transduceAsyncHasNextIterator, transduceArray, transduceGenerator,
+    transduceAsyncIterator,
+    transduceAsyncHasNextIterator,
+    transduceArray,
+    transduceGenerator,
 
-    mapping, filtering, take, skip, eventing, sampling, passthrough, split, randomFilter, neighbors,
+    mapping,
+    filtering,
+    take,
+    skip,
+    eventing,
+    sampling,
+    passthrough,
+    split,
+    randomFilter,
+    neighbors,
 
-    makeArrayIterator, makeAsyncRangeIterator, makeAsyncHasNextRangeIterator
+    makeArrayIterator,
+    makeAsyncRangeIterator,
+    makeAsyncHasNextRangeIterator
 }
