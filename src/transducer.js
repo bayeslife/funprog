@@ -38,7 +38,12 @@ async function transduceArray (xf, rf, init, xs) {
     // pass the rf to the composed transformation
     // pass in the initial value
     var xrf = await xf(rf)
-    return xs.reduce(xrf, init)
+    let r = await xs.reduce(xrf, init)
+    if (r.hasOwnProperty('reduced')) {
+        return r.reduced
+    } else {
+        return r
+    }
 }
 
 async function * transduceGenerator (transform, reducerfunction, init, streamgenerator) {

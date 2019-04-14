@@ -36,7 +36,7 @@ describe('Given the transform functions', function () {
         let fooBar = (x) => ({ foo: 'bar' })
         var f = assign(fooBar)
         var rf = await f(concat)
-        var val = await rf([], { bar: 'foo'})
+        var val = await rf([], { bar: 'foo' })
         assert.equal('bar', val[0].foo)
         assert.equal('foo', val[0].bar)
     })
@@ -67,6 +67,14 @@ describe('Given the functional programming library', function () {
             take(1))
         const result = await transduceArray(tform, concat, [], nums)
         assert.equal(result.toString(), [true].toString())
+    })
+    it('Then able to compose assign from an array', async function () {
+        let foobar = (x) => ({ foo: 'bar' })
+        const tform = compose(
+            assign(foobar)
+        )
+        const result = await transduceArray(tform, concat, [], [{}, {}])
+        assert.equal(result[0].foo, 'bar')
     })
     it('Then able to synchronously transduce from an array', async function () {
         const result = await transduceArray(xform, concat, [], nums)

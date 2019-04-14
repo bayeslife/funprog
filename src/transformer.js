@@ -6,7 +6,7 @@ function passthrough () {
   return function (rf) {
     // this takes 2 things and makes them 1
     return async (acc, val) => {
-      return rf(acc, val) // <-- rf replaces 'concat'
+      return rf(acc, val)
     }
   }
 }
@@ -39,15 +39,16 @@ function passthrough () {
  */function assign (f) {
   return function (rf) {
     return async (acc, val) => {
+      var ac = await acc
       var m = await f(val)
       var m2 = Object.assign({}, val)
       var assigned = Object.assign(m2, m)
-      var r = await rf(acc, assigned)
+      var r = await rf(ac, assigned)
       if (r.hasOwnProperty('reduced')) {
         if (r.reduced) {
           return r
         } else {
-          return acc
+          return ac
         }
       } else {
         return r
@@ -235,7 +236,7 @@ function randomFilter (countFrequency) {
           let enriched = Object.assign({}, first)
           enriched.neighbors = neighbors
           enriched.data = first
-          let res = rf(acc, enriched)
+          let res = await rf(acc, enriched)
           neighbors.shift()
           return res
         }
