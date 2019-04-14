@@ -89,6 +89,7 @@ There are a number of operators which generally take a value and return another 
 
 The transforms operate the stream of values
 - mapping - produce a transformed value for each value in the stream
+- assign - produce a value with additional properties for each value in the stream
 - filtering - remove some items from a stream based on a predicate
 - take - stop generator when a limit is reached
 - skip - skip values until a threshold is acheived

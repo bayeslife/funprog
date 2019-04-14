@@ -33,6 +33,29 @@ function passthrough () {
     }
   }
 
+/**
+ * Performs an Object.assign operation on each record in the stream
+ * @param {*} f
+ */function assign (f) {
+  return function (rf) {
+    return async (acc, val) => {
+      var m = await f(val)
+      var m2 = Object.assign({}, val)
+      var assigned = Object.assign(m2, m)
+      var r = await rf(acc, assigned)
+      if (r.hasOwnProperty('reduced')) {
+        if (r.reduced) {
+          return r
+        } else {
+          return acc
+        }
+      } else {
+        return r
+      }
+    }
+  }
+}
+
   /**
    * Removes records from the stream if the dont match the predicate
    * @param {*} p
@@ -223,6 +246,7 @@ function randomFilter (countFrequency) {
 export {
   passthrough,
   mapping,
+  assign,
   filtering,
   take,
   skip,

@@ -1,6 +1,6 @@
 const { identity, isEven, isGreaterThan, modulus, digitize, not, compose, asyncCompose,
     transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, transduceGenerator,
-    take, skip, mapping, filtering, eventing, sampling, passthrough, split, randomFilter, neighbors,
+    take, skip, mapping, assign, filtering, eventing, sampling, passthrough, split, randomFilter, neighbors,
     makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('../dist/funprog.umd')
 const { nums, add1, sub1, concat, useNew, delay } = require('./utility.js')
 
@@ -31,6 +31,14 @@ describe('Given the transform functions', function () {
         var rf = await f(concat)
         var val = await rf([1], [])
         assert.equal(1, val[0])
+    })
+    it('Then assign addprop adds a prop', async function () {
+        let fooBar = (x) => ({ foo: 'bar' })
+        var f = assign(fooBar)
+        var rf = await f(concat)
+        var val = await rf([], { bar: 'foo'})
+        assert.equal('bar', val[0].foo)
+        assert.equal('foo', val[0].bar)
     })
     it('Then passthrough is a no-op', async function () {
         var f = passthrough()
