@@ -1,8 +1,13 @@
 const { identity, isEven, isGreaterThan, modulus, digitize, not, compose, asyncCompose,
+<<<<<<< 86674593f530476c41c4ddd9936d71afa1d29cbd
     transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, transduceGenerator,
     take, skip, mapping, assign, filtering, eventing, sampling, passthrough, split, randomFilter, neighbors,
+=======
+    transduceArray, transduceArray2, transduceAsyncIterator, transduceAsyncHasNextIterator, transduceGenerator,
+    take, skip, mapping, filtering, eventing, sampling, passthrough, split, randomFilter, neighbors,
+>>>>>>> Fix issues with transduceArray and promises
     makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('../dist/funprog.umd')
-const { nums, add1, sub1, concat, useNew, delay } = require('./utility.js')
+const { nums, add1, sub1, concat, push, useNew, delay } = require('./utility.js')
 
 var assert = require('assert')
 
@@ -64,8 +69,9 @@ describe('Given the functional programming library', function () {
     it('Then able to synchronously transduce from an array', async function () {
         const tform = compose(
             mapping(compose(not, sub1)),
-            take(1))
-        const result = await transduceArray(tform, concat, [], nums)
+            take(1)
+        )
+        const result = await transduceArray2(tform, concat, [], nums)
         assert.equal(result.toString(), [true].toString())
     })
     it('Then able to compose assign from an array', async function () {
@@ -77,7 +83,7 @@ describe('Given the functional programming library', function () {
         assert.equal(result[0].foo, 'bar')
     })
     it('Then able to synchronously transduce from an array', async function () {
-        const result = await transduceArray(xform, concat, [], nums)
+        const result = await transduceArray2(xform, push, [], nums)
         assert.equal(result.toString(), [8, 10].toString())
     })
     it('Then able to asynchronously transduce from an interator', async function () {

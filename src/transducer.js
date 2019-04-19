@@ -46,6 +46,19 @@ async function transduceArray (xf, rf, init, xs) {
     }
 }
 
+async function transduceArray2 (xf, rf, init, xs) {
+    // call reduce on the data structure internally (abstract it away)
+    // pass the rf to the composed transformation
+    // pass in the initial value
+    var reducer = await xf(rf)
+    let accumulated = init
+    for (var j = 0; j < xs.length; j++) {
+        let value = xs[j]
+        accumulated = await reducer(accumulated, value)
+    }
+    return accumulated
+}
+
 async function * transduceGenerator (transform, reducerfunction, init, streamgenerator) {
     var reducer = transform(reducerfunction)
     for await (const value of streamgenerator) {
@@ -73,5 +86,6 @@ export {
     transduceAsyncIterator,
     transduceAsyncHasNextIterator,
     transduceArray,
+    transduceArray2,
     transduceGenerator
 }

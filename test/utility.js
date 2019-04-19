@@ -11,6 +11,12 @@ async function concat (xs, val) {
     return x.concat(val)
 }
 
+async function push (xs, val) {
+  var x = await xs
+  x.push(val)
+  return x
+}
+
 async function useNew (accumulator, newValue) {
   return newValue
 }
@@ -29,6 +35,7 @@ module.exports = {
   doubleIt,
   add,
   concat,
+  push,
   useNew,
   delay
 }
