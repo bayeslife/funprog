@@ -1,11 +1,6 @@
 const { identity, isEven, isGreaterThan, modulus, digitize, not, compose, asyncCompose,
-<<<<<<< 86674593f530476c41c4ddd9936d71afa1d29cbd
-    transduceArray, transduceAsyncIterator, transduceAsyncHasNextIterator, transduceGenerator,
-    take, skip, mapping, assign, filtering, eventing, sampling, passthrough, split, randomFilter, neighbors,
-=======
     transduceArray, transduceArray2, transduceAsyncIterator, transduceAsyncHasNextIterator, transduceGenerator,
-    take, skip, mapping, filtering, eventing, sampling, passthrough, split, randomFilter, neighbors,
->>>>>>> Fix issues with transduceArray and promises
+    take, skip, mapping, assign, filtering, eventing, sampling, passthrough, split, randomFilter, neighbors,
     makeAsyncRangeIterator, makeAsyncHasNextRangeIterator } = require('../dist/funprog.umd')
 const { nums, add1, sub1, concat, push, useNew, delay } = require('./utility.js')
 

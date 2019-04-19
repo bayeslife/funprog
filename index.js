@@ -12,7 +12,7 @@ import { makeArrayIterator, makeAsyncRangeIterator, makeAsyncHasNextRangeIterato
 
 export {
 
-    not, identity, isEven, isGreaterThan, digitize, modulus, select,
+    not, identity, isEven, isGreaterThan, digitize, modulus, select, assign,
 
     compose, asyncCompose, apply,
 
